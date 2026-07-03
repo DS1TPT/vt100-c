@@ -27,6 +27,7 @@
 #define TRUE 1
 #endif
 
+#define VT_KEY_ESC 27
 #define VT_KEY_BS 8
 #define VT_KEY_DEL 127
 #define VT_KEY_CR 13

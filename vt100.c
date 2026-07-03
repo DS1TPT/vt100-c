@@ -50,14 +50,14 @@ int vt_getKeypress()
 {
     int ch;
     ch = getchar();
-    if (ch == '\033') {
+    if (ch == '\033') { /* Escape: Sequence or Single keypress? */
         sleepms(50);
         if (chkRemainingInput()) {
             if (getchar() == '[') {
                 return getchar();
             }
         } else {
-            return ch;
+            return VT_KEY_ESC;
         }
     } else {
         return ch;
