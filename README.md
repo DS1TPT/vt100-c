@@ -1,5 +1,5 @@
 # VT100-C
-ANSI VT100 Escape Sequence Support, C language  
+ANSI VT100 Escape Sequences, C language  
 
 Supported Environment
 -----------------------
