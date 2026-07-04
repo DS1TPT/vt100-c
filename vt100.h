@@ -161,7 +161,8 @@ typedef enum {
 
 /* Get a key input from stdin. Returns keycode of the key pressed.
  * This function uses sleep to check if there is any remaining bytes unread
- * by getchar() to determine if input is 3B escape sequence or lone escape key input.
+ * by getchar() to determine if input is escape sequence or lone escape key input.
+ * This function will return VT_KEY_UNDEFINED if undefined escape sequence has been input.
  */
 int vt_getKeypress();
 
