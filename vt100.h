@@ -32,10 +32,34 @@
 #define VT_KEY_DEL 127
 #define VT_KEY_CR 13
 #define VT_KEY_LF 10
-#define VT_KEY_UP 'A'
-#define VT_KEY_DOWN 'B'
-#define VT_KEY_RIGHT 'C'
-#define VT_KEY_LEFT 'D'
+/* Keycodes representing keys that generated escape sequences will have
+ * 0x100 added to their last char's ASCII value.
+ * This rule also apply to the keypad numeric mode, to tell between normal
+ * numeric input and keypad input.
+ */
+#define VT_KEY_UP ((int)(0x100 + 'A'))
+#define VT_KEY_DOWN ((int)(0x100 + 'B'))
+#define VT_KEY_RIGHT ((int)(0x100 + 'C'))
+#define VT_KEY_LEFT ((int)(0x100 + 'D'))
+#define VT_KEY_PF1 ((int)(0x100 + 'P'))
+#define VT_KEY_PF2 ((int)(0x100 + 'Q'))
+#define VT_KEY_PF3 ((int)(0x100 + 'R'))
+#define VT_KEY_PF4 ((int)(0x100 + 'S'))
+#define VT_KEY_KP0 ((int)(0x100 + 'p'))
+#define VT_KEY_KP1 ((int)(0x100 + 'q'))
+#define VT_KEY_KP2 ((int)(0x100 + 'r'))
+#define VT_KEY_KP3 ((int)(0x100 + 's'))
+#define VT_KEY_KP4 ((int)(0x100 + 't'))
+#define VT_KEY_KP5 ((int)(0x100 + 'u'))
+#define VT_KEY_KP6 ((int)(0x100 + 'v'))
+#define VT_KEY_KP7 ((int)(0x100 + 'w'))
+#define VT_KEY_KP8 ((int)(0x100 + 'x'))
+#define VT_KEY_KP9 ((int)(0x100 + 'y'))
+#define VT_KEY_KP_DASH ((int)(0x100 + 'm'))
+#define VT_KEY_KP_COMMA ((int)(0x100 + 'l'))
+#define VT_KEY_KP_PERIOD ((int)(0x100 + 'n'))
+#define VT_KEY_KP_ENTER ((int)(0x100 + 'M'))
+#define VT_KEY_UNDEFINED ((int)0x200)
 
 #define VT_FORMAT_MASK_BOLD       ((vt_formatBitmaskTypedef) 0x20)
 #define VT_FORMAT_MASK_DIM        ((vt_formatBitmaskTypedef) 0x10)

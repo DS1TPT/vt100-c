@@ -52,14 +52,57 @@ int vt_getKeypress()
     ch = getchar();
     if (ch == '\033') { /* Escape: Sequence or Single keypress? */
         sleepms(50);
-        if (chkRemainingInput()) {
-            if (getchar() == '[') {
-                return getchar();
-            }
-        } else {
+        if (chkRemainingInput()) { /* Remaining input after 50ms, possible escape seq. */
+            ch = getchar();
+            switch (ch) {
+            case '[':
+                ch = getchar();
+                if ('A' <= ch && ch <= 'D') { /* ANSI mode, cursor key mode reset */
+                    return (int)(0x100 + ch);
+                } else {
+                    return VT_KEY_UNDEFINED;
+                }
+                break;
+            case 'O':
+                ch = getchar();
+                if ('A' <= ch && ch <= 'D') { /* ANSI, cursor key mode set */
+                    return (int)(0x100 + ch);
+                } else if ('P' <= ch && ch <= 'S') { /* ANSI, PF1-4 */
+                    return (int)(0x100 + ch);
+                } else if ('p' <= ch && ch <= 'y') { /* ANSI KP application mode, num */
+                    return (int)(0x100 + ch);
+                } else if ('l' <= ch && ch <= 'n') { /* ANSI KP application mode, -,. */
+                    return (int)(0x100 + ch);
+                } else if (ch == 'M') { /* ANSI KP application mode, ENT */
+                    return VT_KEY_KP_ENTER;
+                } else {
+                    return VT_KEY_UNDEFINED;
+                }
+            case '?':
+                ch = getchar();
+                if ('p' <= ch && ch <= 'y') { /* VT52, KP application mode, num */
+                    return (int)(0x100 + ch);
+                } else if ('l' <= ch && ch <= 'n') { /* VT52, KP application mode, -,. */
+                    return (int)(0x100 + ch);
+                } else if (ch == 'M') { /* VT52, KP application mode, ENT */
+                    return VT_KEY_KP_ENTER;
+                } else {
+                    return VT_KEY_UNDEFINED;
+                }
+            default:
+                ch = getchar();
+                if ('A' <= ch && ch <= 'D') { /* VT52, cursor key */
+                    return (int)(0x100 + ch);
+                } else if ('P' <= ch && ch <= 'S') { /* VT52, PF1-4 */
+                    return (int)(0x100 + ch);
+                } else {
+                    return VT_KEY_UNDEFINED;
+                }
+            }    
+        } else { /* No remaining input after 50ms: ESC keypress */
             return VT_KEY_ESC;
         }
-    } else {
+    } else { /* NOT escape */
         return ch;
     }
 }
